@@ -1003,6 +1003,7 @@ BrowserDialog.prototype.getFolderListing = function (context_url, method) {
                 .bind('click.imagebrowser', function(e) {
                     e.preventDefault();
                     e.stopPropagation();
+                    // self.getFolderListing(jq(this).attr('href'), self.method_folderlisting);
                     self.getFolderListing(jq(this).attr('href'), self.method_folderlisting);
                 });
             // item link action
