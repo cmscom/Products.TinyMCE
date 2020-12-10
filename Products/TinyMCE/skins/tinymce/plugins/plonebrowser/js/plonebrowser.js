@@ -163,7 +163,7 @@ BrowserDialog.prototype.init = function () {
             e.preventDefault();
             jq('#linktype_panel div', document).removeClass('current');
             jq(this, document).parent('div').addClass('current');
-            switch (jq(this).attr('href')) {
+            switch (jq(this).prop('href')) {
                 case "#internal":
                     self.displayPanel('browse');
                     self.getCurrentFolderListing();
@@ -193,10 +193,10 @@ BrowserDialog.prototype.init = function () {
         /* handle link plugin startup */
         if (selected_node.length > 0 && selected_node[0].nodeName.toUpperCase() === "A") {
             // element is anchor, we have a link
-            href = jq.trim(selected_node.attr('href'));
+            href = jq.trim(selected_node.prop('href'));
 
             // setup form data
-            if ((typeof(selected_node.attr('title')) !== "undefined")) {
+            if ((typeof(selected_node.prop('title')) !== "undefined")) {
                 jq('#title', document).val(selected_node.attr('title'));
             }
 
@@ -280,7 +280,7 @@ BrowserDialog.prototype.init = function () {
             e.preventDefault();
             jq('#linktype_panel div', document).removeClass('current');
             jq(this, document).parent('div').addClass('current');
-            switch (jq(this).attr('href')) {
+            switch (jq(this).prop('href')) {
                 case "#internal":
                     self.displayPanel('browse');
                     self.getCurrentFolderListing();
@@ -347,7 +347,7 @@ BrowserDialog.prototype.init = function () {
                 jq('#imagetitle', document).val(selected_node.get(0).alt);
                 jq('#imageurl', document).val(selected_node.get(0).src);
             } else {
-                scaled_image = this.parseImageScale(selected_node.attr("src"));
+                scaled_image = this.parseImageScale(selected_node.prop("src"));
 
                 // Store the selected scale on the dimensions <select>.
                 jq('#dimensions', document).data('selectedScale', scaled_image.scale);
@@ -449,7 +449,7 @@ BrowserDialog.prototype.parseImageScale = function (url) {
  */
 BrowserDialog.prototype.setLinkAttributes = function (node, link) {
     var jq = top.jQuery;
-    var panelname = jq('#linktype .current a', document).attr('href');
+    var panelname = jq('#linktype .current a', document).prop('href');
 
     jq(node)
         .attr('href', link)
@@ -469,7 +469,7 @@ BrowserDialog.prototype.setLinkAttributes = function (node, link) {
 BrowserDialog.prototype.insertLink = function () {
     var jq = top.jQuery;
     var selected_node = jq(this.editor.selection.getNode(), document),
-        active_panel = jq('#linktype .current a', document).attr('href'),
+        active_panel = jq('#linktype .current a', document).prop('href'),
         self = this,
         mailsubject,
         elementArray,
@@ -593,7 +593,7 @@ BrowserDialog.prototype.insertImage = function () {
         jq = top.jQuery,
         selected_node = this.editor.selection.getNode(),
         href = this.editor.convertURL(this.current_link),
-        active_panel = jq('#linktype .current a', document).attr('href'),
+        active_panel = jq('#linktype .current a', document).prop('href'),
         dimension,
         classes;
 
@@ -858,7 +858,7 @@ BrowserDialog.prototype.getFolderListing = function (context_url, method) {
                     if (item.url === self.current_link && self.editor.settings.link_using_uids) {
                         self.current_link = 'resolveuid/' + item.uid;
                     }
-                    switch (jq('#general_panel .legend .current', document).attr('id')) {
+                    switch (jq('#general_panel .legend .current', document).prop('id')) {
                         // TODO: use jquery dom to be sure stuff is closed
                         case 'listview':
                             if (item.is_folderish) {
@@ -1012,7 +1012,7 @@ BrowserDialog.prototype.getFolderListing = function (context_url, method) {
                 .bind('click.imagebrowser', function (e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    self.setDetails(jq(this).attr('href'));
+                    self.setDetails(jq(this).prop('href'));
                 });
 
             // Make the image upload form upload the image into the current container.
