@@ -177,6 +177,8 @@ BrowserDialog.prototype.init = function () {
                 case "#anchor":
                     self.displayPanel('anchor');
                     break;
+                default:
+                    console.error(`Sorry, #linktype a ${jq(this).prop('href')}.`);
             }
         });
         jq('#externalurl', document).keyup(function (e) {
@@ -288,6 +290,8 @@ BrowserDialog.prototype.init = function () {
                 case "#external":
                     self.displayPanel('externalimage');
                     break;
+                default:
+                    console.error(`Sorry, #linktype a img ${jq(this).prop('href')}.`);
             }
         });
 
@@ -529,6 +533,8 @@ BrowserDialog.prototype.insertLink = function () {
                 link = '#' + url_match[1];
             }
             break;
+        default:
+            console.error(`Sorry, active_panel ${active_panel}.`);
     }
 
     // Remove element if there is no link
@@ -932,6 +938,9 @@ BrowserDialog.prototype.getFolderListing = function (context_url, method) {
                             }
                             item_number++;
                             break;
+                        default:
+                            console.error(`Sorry, ${jq('#general_panel .legend .current', document).prop('id')}.`);
+
                     }
 
 
