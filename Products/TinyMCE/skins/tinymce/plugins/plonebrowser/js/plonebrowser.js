@@ -1,3 +1,9 @@
+var getLocation = function(href) {
+    var l = document.createElement("a");
+    l.href = href;
+    return l;
+};
+
 /*jslint regexp: true,
          browser: true,
          sloppy: true,
@@ -163,7 +169,7 @@ BrowserDialog.prototype.init = function () {
             e.preventDefault();
             jq('#linktype_panel div', document).removeClass('current');
             jq(this, document).parent('div').addClass('current');
-            switch (jq(this).prop('href')) {
+            switch (getLocation(jq(this).prop('href')).hash) {
                 case "#internal":
                     self.displayPanel('browse');
                     self.getCurrentFolderListing();
@@ -178,7 +184,7 @@ BrowserDialog.prototype.init = function () {
                     self.displayPanel('anchor');
                     break;
                 default:
-                    console.error(`Sorry, #linktype a ${jq(this).prop('href')}.`);
+                    console.error(`Sorry, #linktype a ${getLocation(jq(this).prop('href')).hash}.`);
             }
         });
         jq('#externalurl', document).keyup(function (e) {
@@ -282,7 +288,7 @@ BrowserDialog.prototype.init = function () {
             e.preventDefault();
             jq('#linktype_panel div', document).removeClass('current');
             jq(this, document).parent('div').addClass('current');
-            switch (jq(this).prop('href')) {
+            switch (getLocation(jq(this).prop('href')).hash) {
                 case "#internal":
                     self.displayPanel('browse');
                     self.getCurrentFolderListing();
@@ -291,7 +297,7 @@ BrowserDialog.prototype.init = function () {
                     self.displayPanel('externalimage');
                     break;
                 default:
-                    console.error(`Sorry, #linktype a img ${jq(this).prop('href')}.`);
+                    console.error(`Sorry, #linktype a img ${getLocation(jq(this).prop('href')).hash}.`);
             }
         });
 
@@ -473,7 +479,7 @@ BrowserDialog.prototype.setLinkAttributes = function (node, link) {
 BrowserDialog.prototype.insertLink = function () {
     var jq = top.jQuery;
     var selected_node = jq(this.editor.selection.getNode(), document),
-        active_panel = jq('#linktype .current a', document).prop('href'),
+        active_panel = getLocation(jq('#linktype .current a', document).prop('href')).hash,
         self = this,
         mailsubject,
         elementArray,
