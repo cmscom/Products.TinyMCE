@@ -1158,7 +1158,7 @@ BrowserDialog.prototype.displayPanel = function(panel, upload_allowed) {
     // show details panel, if an entry is selected
     checkedlink = jq("input:radio[name=internallink]:checked", document);
     if ((checkedlink.length === 1) && (panel === "browse")) {
-      this.setDetails(jq(checkedlink).prop('value'));
+      this.setDetails(jq(checkedlink).val());
     }
 
     // handle browse panel
