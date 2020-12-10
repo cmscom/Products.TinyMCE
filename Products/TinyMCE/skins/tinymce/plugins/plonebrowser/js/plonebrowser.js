@@ -197,7 +197,7 @@ BrowserDialog.prototype.init = function () {
 
             // setup form data
             if ((typeof(selected_node.prop('title')) !== "undefined")) {
-                jq('#title', document).val(selected_node.attr('title'));
+                jq('#title', document).val(selected_node.prop('title'));
             }
 
             // determine link type
