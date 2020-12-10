@@ -205,7 +205,7 @@ BrowserDialog.prototype.init = function () {
                 // anchor
                 jq('input:radio[value=' + href + ']', document).click();
                 jq('#linktype a[href=#anchor]', document).click();
-                jq('#cssstyle', document).val(selected_node.attr('style'));
+                jq('#cssstyle', document).val(selected_node.prop('style'));
             } else if (href.indexOf('mailto:') > -1) {
                 // email
                 href = href.split('mailto:')[1].split('?subject=');
@@ -219,13 +219,13 @@ BrowserDialog.prototype.init = function () {
 
                 jq('#mailaddress', document).val(mailaddress);
                 jq('#mailsubject', document).val(mailsubject);
-                jq('#cssstyle', document).val(selected_node.attr('style'));
+                jq('#cssstyle', document).val(selected_node.prop('style'));
                 jq('#linktype a[href=#email]', document).click();
             } else if ((href.indexOf(this.editor.settings.portal_url) === -1) &&
                 ((href.indexOf('http://') === 0) || (href.indexOf('https://') === 0) || (href.indexOf('ftp://') === 0))) {
                 // external
                 this.checkExternalURL(href);
-                jq('#cssstyle', document).val(selected_node.attr('style'));
+                jq('#cssstyle', document).val(selected_node.prop('style'));
                 jq('#linktype a[href=#external]', document).click();
             } else {
                 // internal
@@ -251,10 +251,10 @@ BrowserDialog.prototype.init = function () {
                     this.current_link = this.getAbsoluteUrl(this.editor.settings.document_base_url, href);
                     this.getFolderListing(this.getParentUrl(this.current_link), 'tinymce-jsonlinkablefolderlisting');
                 }
-                jq('#cssstyle', document).val(selected_node.attr('style'));
+                jq('#cssstyle', document).val(selected_node.prop('style'));
             }
 
-            jq('#targetlist', document).val(selected_node.attr('target'));
+            jq('#targetlist', document).val(selected_node.prop('target'));
             // TODO: set the rest of the "advanced" fields that are in common for all of them
         } else {
             // plain text selection
@@ -308,13 +308,13 @@ BrowserDialog.prototype.init = function () {
             //   - image-left
             //   - image-right
             // and pass all other classes through as-is.
-            jq.each(selected_node.attr('class').split(/\s+/), function () {
+            jq.each(selected_node.prop('class').split(/\s+/), function () {
                 var classname = this.toString();
                 switch (classname) {
                     case 'captioned':
                         if (self.editor.settings.allow_captioned_images) {
                             // Check the caption checkbox
-                            jq('#caption', document).attr('checked', 'checked');
+                            jq('#caption', document).prop('checked', 'checked');
                         }
                         break;
 
@@ -452,11 +452,11 @@ BrowserDialog.prototype.setLinkAttributes = function (node, link) {
     var panelname = jq('#linktype .current a', document).prop('href');
 
     jq(node)
-        .attr('href', link)
-        .attr('data-mce-href', link)
-        .attr('title', jq('#title', document).val())
-        .attr('target', jq('#targetlist', document).val())
-        .attr('style', jq('#cssstyle', document).val())
+        .prop('href', link)
+        .data('mce-href', link)
+        .prop('title', jq('#title', document).val())
+        .prop('target', jq('#targetlist', document).val())
+        .prop('style', jq('#cssstyle', document).val())
         .removeClass('internal-link external-link anchor-link mail-link')
         .addClass(panelname.substr(1, panelname.length) + '-link');
 };
@@ -747,7 +747,7 @@ BrowserDialog.prototype.setDetails = function (url) {
             if (data.thumb !== "") {
                 jq('#previewimagecontainer', document)
                     .empty()
-                    .append(jq('<img/>', document).attr({'src': data.thumb}));
+                    .append(jq('<img/>', document).prop({'src': data.thumb}));
                 // Save the thumbnail URL for later use.
                 self.thumb_url = data.thumb;
             } else {
@@ -765,11 +765,11 @@ BrowserDialog.prototype.setDetails = function (url) {
                 jq.each(data.scales, function () {
                     var scale = this,
                         option = jq('<option/>', document)
-                            .attr({'value': scale.value})
+                            .prop({'value': scale.value})
                             .text(scale_title(scale));
 
                     if (option.val() === dimension) {
-                        option.attr({'selected': 'selected'});
+                        option.prop({'selected': 'selected'});
                     }
                     option.appendTo(dimensions);
                 });
@@ -781,7 +781,7 @@ BrowserDialog.prototype.setDetails = function (url) {
                 .parent('.item')
                 .removeClass('current');
             jq('input:radio[name=internallink][value="' + data.uid_relative_url + '"]', document)
-                .attr('checked', 'checked')
+                .prop('checked', 'checked')
                 .parent('.item')
                 .addClass('current');
 
@@ -948,7 +948,7 @@ BrowserDialog.prototype.getFolderListing = function (context_url, method) {
                 jqShortcutsView = jq('#shortcutsview', document);
                 jqShortcutItem = jq('#shortcutsview #item-template', document);
 
-                jqShortcutsBtn.attr('title', self.labels.label_shortcuts);
+                jqShortcutsBtn.prop('title', self.labels.label_shortcuts);
 
                 jq.each(self.shortcuts_html, function () {
                     jqItem = jqShortcutItem.clone();
@@ -1016,7 +1016,7 @@ BrowserDialog.prototype.getFolderListing = function (context_url, method) {
                 });
 
             // Make the image upload form upload the image into the current container.
-            jq('#upload_form', document).attr('action', context_url + '/tinymce-upload');
+            jq('#upload_form', document).prop('action', context_url + '/tinymce-upload');
 
             // Select image if we are updating existing one
             if (self.editing_existing_image === true) {
@@ -1114,9 +1114,9 @@ BrowserDialog.prototype.displayPanel = function(panel, upload_allowed) {
 
     // handle upload button
     if ((upload_allowed === true || upload_allowed === undefined) && ((panel === "browse" || panel === "details") && this.is_search_activated === false)) {
-        jq('#upload', document).attr('disabled', false).fadeTo(1, 1);
+        jq('#upload', document).prop('disabled', false).fadeTo(1, 1);
     } else {
-        jq('#upload', document).attr('disabled', true).fadeTo(1, 0.5);
+        jq('#upload', document).prop('disabled', true).fadeTo(1, 0.5);
     }
 
     // handle email panel
@@ -1149,7 +1149,7 @@ BrowserDialog.prototype.displayPanel = function(panel, upload_allowed) {
     // show details panel, if an entry is selected
     checkedlink = jq("input:radio[name=internallink]:checked", document);
     if ((checkedlink.length === 1) && (panel === "browse")) {
-      this.setDetails(jq(checkedlink).attr('value'));
+      this.setDetails(jq(checkedlink).prop('value'));
     }
 
     // handle browse panel
@@ -1160,7 +1160,7 @@ BrowserDialog.prototype.displayPanel = function(panel, upload_allowed) {
             jq('#browseimage_panel #general_panel', document).removeClass('width-3:4').addClass('width-full');;
         }
         jq('#browseimage_panel', document).removeClass('hide').addClass('row');
-        jq('#insert-selection', document).attr('disabled','disabled');
+        jq('#insert-selection', document).prop('disabled','disabled');
         jq('#upload-button', document).removeClass('hide');
     } else {
         jq('#browseimage_panel', document).removeClass('row').addClass('hide');
@@ -1278,10 +1278,10 @@ BrowserDialog.prototype.previewExternalURL = function () {
         urlprefix = jq('#externalurlprefix', document).val();
 
     if (url === "") {
-        jq('#previewexternal', document).attr('src', "about:blank");
+        jq('#previewexternal', document).prop('src', "about:blank");
         return "";
     } else {
-        jq('#previewexternal', document).attr('src', urlprefix + url);
+        jq('#previewexternal', document).prop('src', urlprefix + url);
         return urlprefix + url;
     }
 };
