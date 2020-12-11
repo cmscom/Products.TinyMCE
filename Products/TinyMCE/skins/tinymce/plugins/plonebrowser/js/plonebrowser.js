@@ -877,7 +877,7 @@ BrowserDialog.prototype.getFolderListing = function (context_url, method) {
                                 folder_html.push('<div class="list item folderish ' + (i % 2 === 0 ? 'even' : 'odd') + '">');
                                 if (self.is_link_plugin === true) {
                                     jq.merge(folder_html, [
-                                        '<input href="' + item.url + '" ',
+                                        '<input data-href="' + item.url + '" ',
                                             'type="radio" class="noborder" style="margin: 0; width: 16px" name="internallink" value="',
                                             'resolveuid/' + item.uid ,
                                             '"/> '
@@ -895,7 +895,7 @@ BrowserDialog.prototype.getFolderListing = function (context_url, method) {
                             } else {
                                 jq.merge(item_html, [
                                     '<div class="item list ' + (i % 2 === 0 ? 'even' : 'odd') + '" title="' + item.description + ((item.description) ? '&#13;&#13;' : '') + item.path + '">',
-                                        '<input href="' + item.url + '" ',
+                                        '<input data-href="' + item.url + '" ',
                                             'type="radio" class="noborder" style="margin: 0; width: 16px" name="internallink" value="',
                                             'resolveuid/' + item.uid ,
                                             '"/> ',
@@ -930,7 +930,7 @@ BrowserDialog.prototype.getFolderListing = function (context_url, method) {
                                                 '<img src="' + item.url + '/@@images/image/' + thumb_name + '" alt="' + item.title + '" />',
                                             '</div>',
                                             '<p>' + item.title + '</p>',
-                                            '<input href="' + item.url + '" ',
+                                            '<input data-href="' + item.url + '" ',
                                                 'type="radio" class="noborder" name="internallink" value="',
                                                 'resolveuid/' + item.uid,
                                                 '"/> ',
@@ -1027,7 +1027,7 @@ BrowserDialog.prototype.getFolderListing = function (context_url, method) {
                 .bind('click.imagebrowser', function (e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    self.setDetails(jq(this).prop('href'));
+                    self.setDetails(jq(this).data('href'));
                 });
 
             // Make the image upload form upload the image into the current container.
