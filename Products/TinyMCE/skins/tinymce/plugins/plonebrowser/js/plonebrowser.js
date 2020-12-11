@@ -85,7 +85,7 @@ BrowserDialog.prototype.init = function () {
     this.shortcuts_html = this.is_link_plugin ? self.editor.settings.link_shortcuts_html : self.editor.settings.image_shortcuts_html;
 
     // Setup events
-    jq('#insert-selection', document).click(function (e) {
+    jq('#insert-selection', document).on('click', function (e) {
         e.preventDefault();
         if (self.is_link_plugin === true) {
             self.insertLink();
@@ -93,15 +93,15 @@ BrowserDialog.prototype.init = function () {
             self.insertImage();
         }
     });
-    jq('#cancel', document).click(function (e) {
+    jq('#cancel', document).on('click', function (e) {
         e.preventDefault();
         self.tinyMCEPopup.close();
     });
-    jq('#upload', document).click(function (e) {
+    jq('#upload', document).on('click', function (e) {
         e.preventDefault();
         self.displayPanel('upload');
     });
-    jq('#uploadbutton', document).click(function (e) {
+    jq('#uploadbutton', document).on('click', function (e) {
         e.preventDefault();
         jq('#upload_form', document).submit();
     });
@@ -112,24 +112,24 @@ BrowserDialog.prototype.init = function () {
         e.stopPropagation();
         self.checkSearch(e);
     });
-    jq('#clear-btn', document).click(function (e) {
+    jq('#clear-btn', document).on('click', function (e) {
         e.preventDefault();
         jq('#searchtext', document).val("");
         self.checkSearch(e);
     });
-    jq('#search-btn', document).click(function (e) {
+    jq('#search-btn', document).on('click', function (e) {
         e.preventDefault();
         self.checkSearch(e);
     });
     // handle shortcuts button
-    jq("#shortcutsicon", document).click(function (e) {
+    jq("#shortcutsicon", document).on('click', function (e) {
         e.preventDefault();
         jq(this).toggleClass('selected');
         jq('#shortcutsview', document).toggle();
     });
 
     // handle different folder listing view types
-    jq('#general_panel .legend a', document).click(function (e) {
+    jq('#general_panel .legend a', document).on('click', function (e) {
         self.editing_existing_image = true;
         e.preventDefault();
         jq('#general_panel .legend a', document).removeClass('current');
@@ -165,7 +165,7 @@ BrowserDialog.prototype.init = function () {
         jq('.legend', document).hide();
 
         // setup link buttons acions
-        jq('#linktype a', document).click(function (e) {
+        jq('#linktype a', document).on('click', function (e) {
             e.preventDefault();
             jq('#linktype_panel div', document).removeClass('current');
             jq(this, document).parent('div').addClass('current');
@@ -191,7 +191,7 @@ BrowserDialog.prototype.init = function () {
             self.checkExternalURL(this.value);
         });
         jq('#targetlist', document).change(this.setupPopupVisibility);
-        jq('#previewexternalurl', document).click(function (e) {
+        jq('#previewexternalurl', document).on('click', function (e) {
             e.preventDefault();
             jq('#previewexternal', document).show();
             jq(this).text('Refresh Preview');
@@ -284,7 +284,7 @@ BrowserDialog.prototype.init = function () {
 
         // setup panel buttons acions
         jq('#email_link, #anchor_link', document).hide();
-        jq('#linktype a', document).click(function (e) {
+        jq('#linktype a', document).on('click', function (e) {
             e.preventDefault();
             jq('#linktype_panel div', document).removeClass('current');
             jq(this, document).parent('div').addClass('current');
@@ -301,7 +301,7 @@ BrowserDialog.prototype.init = function () {
             }
         });
 
-        jq('#previewimagebutton', document).click(function (e) {
+        jq('#previewimagebutton', document).on('click', function (e) {
             var url = jq('#imageurl', document).val();
             e.preventDefault();
             jq('#imgpreview', document).html('<img src="' + url + '" />');
