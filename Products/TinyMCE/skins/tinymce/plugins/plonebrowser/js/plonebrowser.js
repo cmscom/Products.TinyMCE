@@ -211,8 +211,8 @@ BrowserDialog.prototype.init = function () {
             // determine link type
             if (href.indexOf('#') === 0) {
                 // anchor
-                jq('input:radio[value=' + href + ']', document).on('click');
-                jq('#linktype a[href=#anchor]', document).on('click');
+                jq('input:radio[value=' + href + ']', document).click();
+                jq('#linktype a[href=#anchor]', document).click();
                 jq('#cssstyle', document).val(selected_node.prop('style'));
             } else if (href.indexOf('mailto:') > -1) {
                 // email
@@ -228,13 +228,13 @@ BrowserDialog.prototype.init = function () {
                 jq('#mailaddress', document).val(mailaddress);
                 jq('#mailsubject', document).val(mailsubject);
                 jq('#cssstyle', document).val(selected_node.prop('style'));
-                jq('#linktype a[href=#email]', document).on('click');
+                jq('#linktype a[href=#email]', document).click();
             } else if ((href.indexOf(this.editor.settings.portal_url) === -1) &&
                 ((href.indexOf('http://') === 0) || (href.indexOf('https://') === 0) || (href.indexOf('ftp://') === 0))) {
                 // external
                 this.checkExternalURL(href);
                 jq('#cssstyle', document).val(selected_node.prop('style'));
-                jq('#linktype a[href=#external]', document).on('click');
+                jq('#linktype a[href=#external]', document).click();
             } else {
                 // internal
                 if (href.indexOf('#') !== -1) {
@@ -269,7 +269,7 @@ BrowserDialog.prototype.init = function () {
             href = jq.trim(this.editor.selection.getContent());
             if ((href.indexOf('http://') === 0) || (href.indexOf('https://') === 0) || (href.indexOf('ftp://') === 0)) {
                 this.checkExternalURL(href);
-                jq('#linktype a[href=#external]', document).on('click');
+                jq('#linktype a[href=#external]', document).click();
             } else {
                 this.getCurrentFolderListing();
             }
@@ -986,9 +986,9 @@ BrowserDialog.prototype.getFolderListing = function (context_url, method) {
                     var el = jq(this),
                         checkbox = el.find('input');
                     if (checkbox.length > 0) {
-                        checkbox.on('click');
+                        checkbox.click();
                     } else {
-                        el.find('a').on('click');
+                        el.find('a').click();
                     }
                 });
 
